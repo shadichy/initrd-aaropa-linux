@@ -35,3 +35,7 @@ find . -type f |
 	sed 's|^\./||g' |
 	/usr/share/bliss/busybox cpio -H newc -o |
 	gzip >/usr/share/bliss/initrd.img
+
+# Copy to /boot
+cp "$(find /usr/lib/modules/ -mindepth 2 -maxdepth 2 -type f -iname "vmlinu[xz]" | tail -1)" /boot/kernel
+cp /usr/share/bliss/initrd.img /boot/initrd.img
