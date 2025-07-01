@@ -1,0 +1,19 @@
+Source: initrd-aaropa-linux
+Section: unknown
+Priority: optional
+Maintainer: Shadichy <shadichy@blisslabs.org>
+Rules-Requires-Root: no
+Build-Depends:
+ debhelper-compat (= 13),
+Standards-Version: 4.7.2
+Homepage: https://github.com/shadichy/initrd-aaropa-linux
+Vcs-Browser: https://github.com/shadichy/initrd-aaropa-linux
+Vcs-Git: https://github.com/shadichy/initrd-aaropa-linux.git
+
+Package: initrd-aaropa-linux
+Architecture: any
+Depends:
+ busybox-aaropa,
+ ${shlibs:Depends},
+ ${misc:Depends},
+Description: Anada Aropa Linux initrd (template)
