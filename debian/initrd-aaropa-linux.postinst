@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -e -x
 
 # Build initramfs
 
@@ -17,7 +17,7 @@ find_dep() { ldd "$1" | awk '{print $3}' | xargs; }
 
 ## Busybox is explicitly handled
 cp -t bin /usr/share/bliss/busybox
-cp -t lib $(find_dep /initrd_lib/bin/busybox)
+cp -t lib $(find_dep bin/busybox)
 
 ## Linker
 cp -t bin /bin/ld.so
@@ -31,11 +31,12 @@ cp -t . usr/share/bliss/initrd/.
 find . -exec touch -d '1970-01-01 00:00' '{}' \;
 
 ## Create gz compressed cpio image
-find . -type f |
+find . |
 	sed 's|^\./||g' |
 	/usr/share/bliss/busybox cpio -H newc -o |
-	gzip >/usr/share/bliss/initrd.img
+	gzip >/boot/initrd.img
 
 # Copy to /boot
-cp "$(find /usr/lib/modules/ -mindepth 2 -maxdepth 2 -type f -iname "vmlinu[xz]" | tail -1)" /boot/kernel
-cp /usr/share/bliss/initrd.img /boot/initrd.img
+find /usr/lib/modules/ -mindepth 2 -maxdepth 2 -type f -iname "vmlinu[xz]" -exec cp {} /boot/kernel \; -quit
+
+exit 0
