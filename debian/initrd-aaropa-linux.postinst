@@ -25,7 +25,7 @@ cp -t lib /usr/lib/*/ld-linux-x86-64.so.*
 cp -t lib64 /usr/lib64/ld-linux-x86-64.so.*
 
 ## Content
-cp -t . /usr/share/bliss/initrd/.
+cp -rt . /usr/share/bliss/initrd/.
 
 ## Reset timestamp to 0
 find . -exec touch -d '1970-01-01 00:00' '{}' \;
