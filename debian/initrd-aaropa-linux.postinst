@@ -36,7 +36,16 @@ find . |
 	/usr/share/bliss/busybox cpio -H newc -o |
 	gzip >/boot/initrd.img
 
-# Copy to /boot
-find /usr/lib/modules/ -mindepth 2 -maxdepth 2 -type f -iname "vmlinu[xz]" -exec cp {} /boot/kernel \; -quit
+## Clean up
+cd ..
+rm -rf initrd
+
+# Copy kernels to /boot
+find /usr/lib/modules/ -mindepth 2 -maxdepth 2 -type f -iname "vmlinu[xz]" -print0 |
+	while read -rd "" kernel; do
+		kname=$(basename "$(dirname "$kernel")")
+		cp "$kernel" "/boot/$(basename "$kernel")-$kname"
+		ln -s initrd.img "/boot/initramfs-$kname.img"
+	done
 
 exit 0
