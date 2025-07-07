@@ -45,7 +45,7 @@ find /usr/lib/modules/ -mindepth 2 -maxdepth 2 -type f -iname "vmlinu[xz]" -prin
 	while read -rd "" kernel; do
 		kname=$(basename "$(dirname "$kernel")")
 		cp "$kernel" "/boot/$(basename "$kernel")-$kname"
-		ln -s initrd.img "/boot/initramfs-$kname.img"
+		[ -h "/boot/initramfs-$kname.img" ] || ln -s initrd.img "/boot/initramfs-$kname.img"
 	done
 
 exit 0
